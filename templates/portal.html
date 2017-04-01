@@ -1,0 +1,13 @@
+ 
+
+<div class="portal-body">
+    <div id="leftArea" class="border">
+        <div class="border">Tables</div>
+        <ul class="border">
+            <li ui-sref="portal.list" ng-Repeat="table in portalC.tableList">{{table}}</li>
+        </ul>
+    </div>
+    <div id="contentArea" class="border">
+        <div ui-view="crud"></div>
+    </div>
+</div>
