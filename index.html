@@ -43,9 +43,9 @@
                     <ul class="nav navbar-nav">
                         <li><a href="#about">ABOUT</a></li>
                         <li><a href="#skills">SKILLS</a></li>
-                        <li has-permission role="admin"><a>Admin</a></li>
-                        <li has-permission role="user"><a>User</a></li>
-                        <li has-permission role="public"><a>Public</a></li>
+                        <li has-permission="appC.roleAdmin"><a>Admin</a></li>
+                        <li has-permission="appC.roleUser"><a>User</a></li>
+                        <li has-permission="appC.rolePublic"><a>Public</a></li>
                     </ul>
                     
                     <button ng-click='appC.logoutClick()' id="nav-button" type="button" class="navbar-toggle" data-toggle="collapse" data-target="">
