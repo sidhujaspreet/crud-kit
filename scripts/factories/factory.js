@@ -5,11 +5,13 @@
         .module('gofarModule.gofarFactories', [])
         .factory('GetData', GetData)
         .factory('UserService', UserService)
-        .factory('Permission', Permission);
+        .factory('Permission', Permission)
+        .factory('AuthInterceptor', AuthInterceptor);
 
     GetData.$inject = ['$http'];
     UserService.$inject = ['$http'];
-    Permission.$inject = ['$rootScope']
+    Permission.$inject = ['$rootScope'];
+    AuthInterceptor.$inject = ['$q', '$location'];
 
     function GetData($http) {
         return {
@@ -48,51 +50,54 @@
     };
 
     function UserService($http) {
-        
+
         var service = {};
- 
+
         service.GetAll = GetAll;
         service.GetById = GetById;
         service.GetByUsername = GetByUsername;
         service.Create = Create;
         service.Update = Update;
         service.Delete = Delete;
- 
+
         return service;
- 
+
         function GetAll() {
             return $http.get('/api/users').then(handleSuccess, handleError('Error getting all users'));
         }
- 
+
         function GetById(id) {
             return $http.get('/api/users/' + id).then(handleSuccess, handleError('Error getting user by id'));
         }
- 
+
         function GetByUsername(username) {
             return $http.get('/api/users/' + username).then(handleSuccess, handleError('Error getting user by username'));
         }
- 
+
         function Create(user) {
             return $http.post('/api/users', user).then(handleSuccess, handleError('Error creating user'));
         }
- 
+
         function Update(user) {
             return $http.put('/api/users/' + user.id, user).then(handleSuccess, handleError('Error updating user'));
         }
- 
+
         function Delete(id) {
             return $http.delete('/api/users/' + id).then(handleSuccess, handleError('Error deleting user'));
         }
- 
+
         // private functions
- 
+
         function handleSuccess(res) {
             return res.data;
         }
- 
+
         function handleError(error) {
-            return function () {
-                return { success: false, message: error };
+            return function() {
+                return {
+                    success: false,
+                    message: error
+                };
             };
         }
 
@@ -100,20 +105,31 @@
 
     function Permission($rootScope) {
         return {
-            setPermission : function(){
+            setPermission: function() {
                 $rootScope.$broadcast('permissionsChanged');
             },
-            permissionList : function(){
+            permissionList: function() {
                 return ['public', 'user', 'admin']
             },
-            permissionA : function() {
+            permissionP: function() {
                 return 'public';
             },
-            permissionB : function() {
+            permissionU: function() {
                 return 'user';
             },
-            permissionC : function() {
+            permissionA: function() {
                 return 'admin';
+            }
+        };
+    };
+
+    function AuthInterceptor($q, $location) {
+        return {
+            responseError(response) {
+                if (response.status === 401 || response.status === 403) {
+                    $location.path('/unauthorized');
+                }
+                return $q.reject(response);
             }
         };
     };
