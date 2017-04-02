@@ -7,16 +7,24 @@
         .controller('homeCtrl', homeCtrl)
         .controller('loginCtrl', loginCtrl)
         .controller('registerCtrl', registerCtrl)
-        .controller('portalCtrl', portalCtrl);
+        .controller('portalCtrl', portalCtrl)
+        .controller('unauthoCtrl', unauthoCtrl);
     
     appCtrl.$inject = ['$rootScope', '$state', '$cookies'];
     homeCtrl.$inject = ['$state'];
     loginCtrl.$inject = ['$rootScope', '$state', 'UserService', '$cookies'];
     registerCtrl.$inject = [];
     portalCtrl.$inject = ['$rootScope', 'GetData', '$location'];
+    unauthoCtrl.$inject = ['$state'];
     
     function appCtrl($rootScope, $state, $cookies){
         var appC = this;
+        appC.rolePublic = ['public'];
+        appC.roleUser = ['user'];
+        appC.roleAdmin = ['admin'];
+        appC.roleALL = ['public', 'user', 'admin'];
+        appC.roleUserAdmin = ['user', 'admin'];
+        appC.rolePublicUser = ['public', 'user'];
         appC.logoutClick = logoutClick;
         return appC;
         
@@ -119,6 +127,14 @@
         vm.name = 'Jaspreet Singh';
         
         return vm;
+    };
+    
+    function unauthoCtrl($state){
+        var self = this;
+        self.goToHome = function(){
+            $state.go('home');
+        };
+        return self;
     };
     
     
