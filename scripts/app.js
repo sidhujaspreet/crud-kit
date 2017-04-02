@@ -28,10 +28,9 @@
                 templateUrl : "templates/add.html"
             });
         });*/
-        .config(function($stateProvider, $urlRouterProvider) {
-
-            $stateProvider
-            
+        .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+            $httpProvider.interceptors.push('AuthInterceptor');
+            $stateProvider            
                 .state('home', {
                     url: '/',
                     templateUrl: 'templates/home.html',
@@ -83,6 +82,9 @@
                         "crud": {
                             templateUrl: 'templates/edit.html'
                         }
+                    },
+                    params: {
+                        roles : ['user', 'admin']
                     }
                 })
         
@@ -92,13 +94,23 @@
                         "crud": {
                             templateUrl: 'templates/add.html'
                         }
+                    },
+                    params: {
+                        roles : ['user', 'admin']
                     }
+                })
+            
+                .state('unauthorized', {
+                    url: '/unauthorized',
+                    templateUrl: 'templates/unauthorized.html',
+                    controller: 'unauthoCtrl',
+                    controllerAs: 'unauthoC'
                 });
             
             $urlRouterProvider.otherwise('/');
         })
     
-        .run(function run($rootScope, $location, $http, $state, $cookies, Permission) {
+        .run(['$rootScope', '$location', '$http', '$state', '$cookies', 'Permission', function($rootScope, $location, $http, $state, $cookies, Permission) {
             // keep user logged in after page refresh
             /*$rootScope.globals = $cookies.getObject('globals') || {};
             if ($rootScope.globals.currentUser) {
@@ -107,11 +119,14 @@
 
             $rootScope.$on('$locationChangeStart', function (event, next, current) {
                 // redirect to login page if not logged in and trying to access a restricted page
-                var restrictedPage = $.inArray($location.path(), ['/', '/login', '/register']) === -1;
+                //var canAccess = 
+                if (($state.current.params && ($state.current.params &&$state.current.params.roles.indexOf(Permission.permissionP()) == -1)) || $state.current.name == 'unauthorized') {
+                    $state.go('unauthorized');
+                }
+                var restrictedPage = ['/', '/login', '/register'].indexOf($location.path()) === -1;//can use $location.path() as well
                 //var loggedIn = $rootScope.globals.currentUser;
                 var loggedIn = $cookies['loggedIn'];//$rootScope.isLoggedIn;
-                if (restrictedPage && loggedIn == 'false') {
-                    $location.path('/');
+                if (restrictedPage && loggedIn == 'false'){
                     $state.go('home');
                     console.log('User not logged in.');
                 }
@@ -119,5 +134,5 @@
                     console.log('User logged in.');
                 }
             });
-        });
+        }]);
 })();
