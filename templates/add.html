@@ -1,0 +1,22 @@
+<div class="container-fluid">
+<form action="">
+    <div class="row">
+        <div class="col-xs-4 form-group">
+          <label for="firstName">First Name :</label>
+          <input class="form-control" type="text" name="firstname" ng-model="portalC.newUser.newName">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4 form-group">
+          <label for="email">Email :</label>
+          <input class="form-control" class="form-control" type="text" name="lastname" ng-model="portalC.newUser.newEmail">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4 text-center">
+          <input class="btn btn-success" type="submit" value="Add" ng-click="portalC.submitAdd()">
+          <input class="btn btn-primary" type="submit" value="Cancel" ng-click="portalC.goToList()">
+        </div>
+    </div>
+</form> 
+</div>

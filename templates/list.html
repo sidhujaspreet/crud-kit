@@ -1,0 +1,22 @@
+<div id="listView">
+<button type="button" class="btn btn-success" ui-sref="portal.add">Add</button>
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Events</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in portalC.data">
+        <td>{{ item.name }}</td>
+        <td>{{ item.email }}</td>
+        <td>
+            <button class="btn btn-primary" has-permission="appC.roleUserAdmin" ui-sref="portal.edit" ng-click="portalC.editClick($index)">Edit</button>
+            <button class="btn btn-danger" has-permission="appC.roleUserAdmin" ng-click="portalC.deleteClick($index)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

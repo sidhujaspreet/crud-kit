@@ -1,0 +1,22 @@
+<div class="conatiner-fluid">
+    <form action="">
+        <div class="row">
+            <div class="col-md-4 form-group">
+          <label for="firstName">First Name :</label>
+          <input class="form-control" type="text" name="firstname" value="{{portalC.emp}}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 form-group">
+          <label for="email">Email :</label>
+          <input class="form-control" type="text" name="lastname" value="{{portalC.email}}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 text-center">
+          <input class="btn btn-primary" type="submit" ui-sref="portal.list" ng-Click="portalC.goToList()" value="Cancel">
+          <input class="btn btn-success" type="submit" value="Submit" ng-click="portalC.submitEdit">
+            </div>
+        </div>
+    </form> 
+</div>
