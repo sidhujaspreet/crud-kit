@@ -1,0 +1,9 @@
+<div id="listView" class="border">
+    <button ui-sref="portal.add">Add</button>
+    <div ng-repeat="x in portalC.data">
+        {{x.name}}
+        <button ui-sref="portal.view" ng-click="portalC.viewDetails($index)">View</button>
+        <button has-permission="appC.roleUserAdmin" ui-sref="portal.edit" ng-click="portalC.editClick($index)">Edit</button>
+        <button has-permission="appC.roleUserAdmin" ng-click="portalC.deleteClick($index)">Delete</button>
+    </div>
+</div>
