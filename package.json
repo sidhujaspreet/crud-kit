@@ -1,0 +1,15 @@
+{
+  "name": "crud-kit",
+  "version": "1.0.0",
+  "description": "Tool to perform CRUD actions with role based authorization using AngularJs.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jaspreet Sidhu",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
